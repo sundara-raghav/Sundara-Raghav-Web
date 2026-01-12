@@ -1,0 +1,15 @@
+# AWS Configuration
+aws_region = "us-east-1"
+
+# Project Configuration
+project_name = "sundara-portfolio"
+
+# S3 Configuration - IMPORTANT: Must be globally unique
+s3_bucket_name = "sundara-raghav-portfolio-unique-name"
+
+# EC2 Configuration
+ec2_instance_type = "t2.micro"
+ssh_key_name      = "portfolio-key" # Name of your AWS key pair
+
+# Security - Restrict SSH access to your IP for better security
+allowed_ssh_cidr = ["0.0.0.0/0"] # Change to ["YOUR_IP/32"] for better security
