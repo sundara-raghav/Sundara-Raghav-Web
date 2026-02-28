@@ -1,0 +1,34 @@
+node_modules
+.DS_Store
+aws/dist/
+dist-ssr
+*.local
+.vscode
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+!terraform.tfvars.example
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# AWS and Security
+*.pem
+*.key
+.aws/
+*.env
+.env.local
+.env.*.local
+
+# Build artifacts
+dist.tar.gz
+*.log
+npm-debug.log*
