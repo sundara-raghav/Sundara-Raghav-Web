@@ -13,7 +13,7 @@ function initTypewriter() {
     const el = document.getElementById('typewriter');
     if (!el) return;
 
-    const words = ["Web Developer", "AWS Enthusiast", "Freelancer", "Prompt Engineer"];
+    const words = ["Web Developer", "AWS Enthusiast", "DevOps Enthusiast", "Freelancer", "Prompt Engineer"];
     let wordIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
@@ -243,26 +243,8 @@ function initScrollToTop() {
 
 // --- GSAP Animations ---
 function initGSAP() {
-    // Hero Text Stagger
 
-
-    // Sections Reveal
-    document.querySelectorAll("section").forEach(section => {
-        gsap.from(section.children, {
-            scrollTrigger: {
-                trigger: section,
-                start: "top 80%",
-                toggleActions: "play none none reverse"
-            },
-            y: 30,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: "power2.out"
-        });
-    });
-
-    // Conic Gradient Rotation
+    // ── Conic Gradient Rotation ──
     gsap.to("#conic-gradient-bg", {
         rotation: 360,
         duration: 20,
@@ -272,6 +254,125 @@ function initGSAP() {
 
     // Gradient styling
     updateGradientTheme();
+
+    // ── Hero: slide in text from left, image from right ──
+    const heroText = document.querySelector('#hero .space-y-6');
+    const heroImgBox = document.querySelector('#hero-image-container');
+    if (heroText) {
+        gsap.from(heroText.children, {
+            x: -60, opacity: 0, duration: 0.9, stagger: 0.15, ease: "power3.out", delay: 0.2
+        });
+    }
+    if (heroImgBox) {
+        gsap.from(heroImgBox, {
+            x: 80, opacity: 0, duration: 1, ease: "power3.out", delay: 0.3
+        });
+    }
+
+    // ── GSAP Float: Hero Illustration ──
+    const heroIllus = document.querySelector('.hero-illus-float');
+    if (heroIllus) {
+        // Remove CSS animation so GSAP takes over
+        heroIllus.style.animation = 'none';
+        gsap.to(heroIllus, {
+            y: -18,
+            rotation: 2,
+            duration: 3,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
+        // Pulsing glow
+        const glow = heroIllus.querySelector('div');
+        if (glow) {
+            gsap.to(glow, {
+                opacity: 1, scale: 1.1, duration: 2, repeat: -1, yoyo: true, ease: "sine.inOut"
+            });
+        }
+    }
+
+    // ── GSAP Float: About Illustration ──
+    const aboutIllus = document.querySelector('.about-illus-float');
+    if (aboutIllus) {
+        aboutIllus.style.animation = 'none';
+        gsap.to(aboutIllus, {
+            y: -14,
+            rotation: -1.5,
+            duration: 3.8,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+            delay: 0.6
+        });
+        // Pulsing glow
+        const glow2 = aboutIllus.querySelector('div');
+        if (glow2) {
+            gsap.to(glow2, {
+                opacity: 1, scale: 1.15, duration: 2.5, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 0.4
+            });
+        }
+    }
+
+    // ── Section Scroll Reveals: handled by initScrollReveal() below ──
+}
+
+// --- Scroll Reveal (CSS + IntersectionObserver) ---
+// Reliable alternative to GSAP ScrollTrigger - elements never get stuck invisible
+function initScrollReveal() {
+    const groups = [
+        // [selector, animation-class, stagger-ms, initial-delay-ms, parent-to-skip]
+        ['section h2', 'sr-up', 0, 0, '#hero'],
+        ['section .font-mono', 'sr-down', 0, 0, '#hero'],
+        ['#about .flex-shrink-0', 'sr-left', 0, 0, null],
+        ['#about .flex-1', 'sr-right', 0, 160, null],
+        ['#experience .exp-card', 'sr-up', 180, 0, null],
+        ['#education .exp-card', 'sr-up', 180, 0, null],
+        ['#skills .rounded-2xl.overflow-hidden', 'sr-left', 0, 0, null],
+        ['#skills .skill-category-card', 'sr-right', 110, 200, null],
+        ['#projects .group', 'sr-up', 130, 0, null],
+        ['#certifications .glass-card', 'sr-scale', 100, 0, null],
+        ['.faq-item', 'sr-up', 90, 0, null],
+        ['#contact .space-y-4', 'sr-left', 0, 0, null],
+        ['#contact form', 'sr-right', 0, 160, null],
+    ];
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('sr-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    groups.forEach(([sel, animCls, stagger, delay, skip]) => {
+        document.querySelectorAll(sel).forEach((el, i) => {
+            if (skip && el.closest(skip)) return;
+            el.classList.add('sr-hidden', animCls);
+            el.style.transitionDelay = `${delay + i * stagger}ms`;
+            observer.observe(el);
+        });
+    });
+
+}
+
+// ── Hero Illustration Mouse Parallax ──
+function initIllustrationParallax() {
+    const heroContainer = document.getElementById('hero-image-container');
+    if (!heroContainer) return;
+    const heroIllus = heroContainer.querySelector('.hero-illus-float');
+    if (!heroIllus) return;
+
+    window.addEventListener('mousemove', (e) => {
+        const xPercent = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
+        const yPercent = (e.clientY / window.innerHeight - 0.5) * 2;
+        gsap.to(heroIllus, {
+            x: xPercent * 12,
+            duration: 1.2,
+            ease: 'power2.out',
+            overwrite: 'auto'
+        });
+    });
 }
 
 function updateGradientTheme() {
@@ -532,15 +633,99 @@ function initCircleCursor() {
     }
 }
 
+// --- Hero Canvas: Cloud/Network Particle Animation ---
+function initHeroCanvas() {
+    const canvas = document.getElementById('hero-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    let width, height, particles;
+    const COUNT = 55;
+    const MAX_DIST = 140;
+
+    function resize() {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+    }
+
+    class Particle {
+        constructor() { this.reset(true); }
+        reset(init) {
+            this.x = Math.random() * width;
+            this.y = init ? Math.random() * height : (Math.random() < 0.5 ? -10 : height + 10);
+            this.r = Math.random() * 2 + 1;
+            const speed = 0.2 + Math.random() * 0.4;
+            const angle = Math.random() * Math.PI * 2;
+            this.vx = Math.cos(angle) * speed;
+            this.vy = Math.sin(angle) * speed;
+            this.pulse = Math.random() * Math.PI * 2;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.pulse += 0.04;
+            if (this.x < -20 || this.x > width + 20 || this.y < -20 || this.y > height + 20) this.reset(false);
+        }
+        draw(isDark) {
+            const alpha = 0.5 + 0.3 * Math.sin(this.pulse);
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fillStyle = isDark
+                ? `rgba(99,179,237,${alpha})`
+                : `rgba(37,99,235,${alpha * 0.7})`;
+            ctx.fill();
+        }
+    }
+
+    function init() {
+        resize();
+        particles = Array.from({ length: COUNT }, () => new Particle());
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+        const isDark = document.documentElement.classList.contains('dark');
+
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw(isDark);
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < MAX_DIST) {
+                    const alpha = (1 - dist / MAX_DIST) * 0.35;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = isDark
+                        ? `rgba(99,179,237,${alpha})`
+                        : `rgba(37,99,235,${alpha * 0.5})`;
+                    ctx.lineWidth = 0.8;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(draw);
+    }
+
+    init();
+    draw();
+    window.addEventListener('resize', () => { resize(); });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     try { initTypewriter(); } catch (e) { console.error("Typewriter failed", e); }
     // try { initEyes(); } catch (e) { console.error("Eyes failed", e); }
+    try { initHeroCanvas(); } catch (e) { console.error("HeroCanvas failed", e); }
     try { initTheme(); } catch (e) { console.error("Theme failed", e); }
     try { initGSAP(); } catch (e) { console.error("GSAP failed", e); }
+    try { initIllustrationParallax(); } catch (e) { console.error("IllusParallax failed", e); }
     try { initTextPressure(); } catch (e) { console.error("Text Pressure failed", e); }
     try { initMagnetButtons(); } catch (e) { console.error("Magnet Buttons failed", e); }
     try { initContactForm(); } catch (e) { console.error("Contact Form failed", e); }
     try { initMobileMenu(); } catch (e) { console.error("Mobile Menu failed", e); }
+    try { initScrollReveal(); } catch (e) { console.error("ScrollReveal failed", e); }
     try { initScrollToTop(); } catch (e) { console.error("ScrollToTop failed", e); }
     try { initFAQ(); } catch (e) { console.error("FAQ failed", e); }
     try { initCircleCursor(); } catch (e) { console.error("Circle Cursor failed", e); }
