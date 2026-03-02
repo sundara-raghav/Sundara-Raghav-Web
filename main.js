@@ -195,11 +195,12 @@ function initTheme() {
     const btns = document.querySelectorAll('.theme-toggle-btn');
     const html = document.documentElement;
 
-    // Default to LIGHT mode. Only add dark if explicitly requested (or temporarily disable dark default)
-    if (localStorage.theme === 'dark') {
-        html.classList.add('dark');
-    } else {
+    // Default to DARK mode. Only switch to light if explicitly set to 'light'.
+    if (localStorage.theme === 'light') {
         html.classList.remove('dark');
+    } else {
+        html.classList.add('dark');
+        localStorage.theme = 'dark';
     }
 
     btns.forEach(btn => {
