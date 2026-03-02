@@ -1,306 +1,168 @@
-# 🌐 Sundara Raghav - Web Portfolio
+# 🌐 Sundara Raghav — Personal Portfolio
 
-A modern, responsive personal web portfolio showcasing projects, skills, and professional achievements. Deployed on AWS with Infrastructure as Code using Terraform.
+A modern, responsive personal portfolio website built with **Vite**, **GSAP animations**, and served via **Docker + Nginx**. Features a premium dark/light mode UI, scroll-triggered animations, redesigned skills section, and a fully optimized production build.
+
+[![GitHub](https://img.shields.io/badge/GitHub-sundara--raghav-181717?logo=github)](https://github.com/sundara-raghav/Sundara-Raghav-Web)
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-sundararaghav0306%2Fportfolio-2496ED?logo=docker)](https://hub.docker.com/r/sundararaghav0306/portfolio)
+
+---
 
 ## ✨ Features
 
-- 📱 **Fully Responsive Design** - Mobile, tablet, and desktop optimized
-- 🎨 **Modern UI/UX** - Clean and professional interface
-- ⚡ **High Performance** - Optimized assets and fast load times
-- 🔄 **Interactive Components** - Engaging user experience
-- 📊 **Project Showcase** - Display your best work
-- 💼 **Professional Layout** - Impress potential clients and employers
-- 🌐 **SEO Optimized** - Better search engine visibility
+- 📱 **Fully Responsive** — Mobile, tablet, and desktop optimized
+- 🌙 **Dark / Light Mode** — Toggle with smooth transitions
+- 🎬 **Scroll Animations** — Fade-up, slide-in, and stagger effects via GSAP & Intersection Observer
+- 🧠 **Skills Section** — Categorized skill badges + animated scrolling marquee
+- ⚡ **High Performance** — Vite-built, minified assets, gzip via Nginx
+- 📄 **Resume Download** — Direct PDF download link
+- 🐳 **Dockerized** — Single command to run anywhere
+
+---
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- **HTML5** - Semantic markup
-- **CSS3** - Modern styling with Tailwind CSS
-- **JavaScript** - Interactive functionality
-- **Tailwind CSS** - Utility-first CSS framework
-- **PostCSS** - CSS transformations
+| Layer | Technology |
+|---|---|
+| Markup | HTML5 (semantic) |
+| Styling | CSS3 + Tailwind CSS v3 |
+| Interactivity | JavaScript (ES Modules) |
+| Animations | GSAP 3 |
+| Build Tool | Vite 5 |
+| CSS Processing | PostCSS + Autoprefixer |
+| Container | Docker (multi-stage build) |
+| Web Server | Nginx 1.27 (Alpine) |
+| Version Control | Git + GitHub |
 
-### Deployment & Infrastructure
-- **AWS S3** - Static website hosting
-- **AWS EC2** - Scalable compute instances
-- **Terraform** - Infrastructure as Code
-- **GitHub** - Version control and repository
-- **GitHub Codespaces** - Cloud development environment
-
-### Build Tools
-- **npm** - Package management
-- **PostCSS** - CSS processing
+---
 
 ## 📁 Project Structure
 
 ```
 Sundara-Raghav-Web/
-├── src/                          # Source files
-│   ├── main.js                   # Main JavaScript
-│   ├── counter.js                # Component logic
-│   └── style.css                 # Styles
-├── public/                        # Static assets
-│   └── images/                   # Image assets
-├── aws/                           # AWS configuration
-│   ├── install                   # AWS CLI setup script
-│   └── README.md                 # AWS deployment guide
-├── terraform/                     # Infrastructure as Code
-│   ├── main.tf                   # Terraform main config
-│   ├── variables.tf              # Variable definitions
-│   ├── outputs.tf                # Output values
-│   ├── ec2-instance.tf           # EC2 configuration
-│   ├── s3-static-website.tf      # S3 configuration
-│   ├── terraform.tfvars          # Terraform variables
-│   └── README.md                 # Terraform guide
-├── deploy-to-s3.sh               # S3 deployment script
-├── deploy-to-ec2.sh              # EC2 deployment script
-├── package.json                  # Node dependencies
-├── tailwind.config.js            # Tailwind configuration
-├── postcss.config.js             # PostCSS configuration
-└── README-DEPLOYMENT.md          # Detailed deployment guide
+├── public/
+│   └── resume_.pdf            # Resume PDF
+├── src/                       # Source assets
+├── dist/                      # Production build output (auto-generated)
+│   ├── index.html
+│   ├── resume_.pdf
+│   └── assets/
+│       ├── index-*.css
+│       └── index-*.js
+├── index.html                 # Main HTML entry point
+├── main.js                    # JavaScript (animations, interactions)
+├── style.css                  # Global styles
+├── tailwind.config.js         # Tailwind configuration
+├── postcss.config.js          # PostCSS configuration
+├── package.json               # Dependencies & scripts
+├── vite.config.js             # Vite configuration (if present)
+├── Dockerfile                 # Multi-stage Docker build
+├── nginx.conf                 # Nginx server config (SPA + gzip)
+└── .dockerignore              # Docker build context exclusions
 ```
+
+---
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- Node.js 14+ and npm
-- Git
-- AWS Account (for deployment)
-- Terraform (for infrastructure setup)
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/sundara-raghav/Sundara-Raghav-Web.git
-   cd Sundara-Raghav-Web
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Start local development**
-   ```bash
-   npm start
-   ```
-
-4. **Build for production**
-   ```bash
-   npm run build
-   ```
-
-## 📦 Deployment Options
-
-### Option 1: Deploy to AWS S3 (Static Website)
-
-**Fastest way to get your portfolio online!**
+### Local Development
 
 ```bash
-./deploy-to-s3.sh
+# 1. Clone the repository
+git clone https://github.com/sundara-raghav/Sundara-Raghav-Web.git
+cd Sundara-Raghav-Web
+
+# 2. Install dependencies
+npm install
+
+# 3. Start dev server (hot reload)
+npm run dev
 ```
 
-**Prerequisites:**
-- AWS CLI configured with credentials
-- S3 bucket created
+Open `http://localhost:5173` in your browser.
 
-**What it does:**
-- Builds the project
-- Uploads to S3
-- Makes files publicly accessible
-- Your site is live!
-
-See [AWS README](aws/README.md) for detailed instructions.
-
-### Option 2: Deploy to AWS EC2 (Full Server)
-
-**For advanced hosting with server capabilities**
+### Production Build
 
 ```bash
-./deploy-to-ec2.sh
+npm run build       # Outputs to dist/
+npm run preview     # Preview the production build locally
 ```
 
-**Prerequisites:**
-- AWS EC2 instance running
-- SSH key configured
-- EC2 security groups properly configured
+---
 
-**What it does:**
-- Connects to your EC2 instance
-- Deploys the application
-- Sets up web server
-- Configures domain (optional)
+## 🐳 Docker
 
-### Option 3: Infrastructure as Code with Terraform
-
-**Automated infrastructure provisioning**
+### Pull & Run from Docker Hub
 
 ```bash
-cd terraform/
-terraform init
-terraform plan
-terraform apply
+docker pull sundararaghav0306/portfolio:latest
+docker run -d -p 8080:80 --name portfolio sundararaghav0306/portfolio:latest
 ```
 
-**What Terraform manages:**
-- EC2 instances
-- S3 buckets
-- Security groups
-- DNS records (if applicable)
-- VPC configuration
+Open **http://localhost:8080** 🎉
 
-See [Terraform README](terraform/README.md) for detailed setup.
-
-## 📖 Deployment Guides
-
-- 📄 **[Complete Deployment Guide](README-DEPLOYMENT.md)** - Step-by-step instructions for all deployment methods
-- 📄 **[AWS Guide](aws/README.md)** - AWS-specific configuration and setup
-- 📄 **[Terraform Guide](terraform/README.md)** - Infrastructure as Code setup and management
-
-## 💻 Local Development
-
-### Available npm Scripts
+### Build Locally
 
 ```bash
-# Start development server
-npm start
+# Build the image
+docker build -t sundara-portfolio .
 
-# Build for production
-npm run build
+# Run the container
+docker run -d -p 8080:80 --name portfolio sundara-portfolio
 
-# Watch for changes
-npm run watch
-
-# Lint code
-npm run lint
+# Stop & remove
+docker stop portfolio && docker rm portfolio
 ```
 
-### Development Workflow
+### Docker Image Details
 
-1. Make changes to source files in `src/`
-2. Changes auto-reload in browser during development
-3. Test on different devices/screen sizes
-4. Build production version with `npm run build`
-5. Deploy using one of the deployment scripts
+| Property | Value |
+|---|---|
+| Base (build) | `node:20-alpine` |
+| Base (serve) | `nginx:1.27-alpine` |
+| Exposed Port | `80` |
+| Docker Hub | [`sundararaghav0306/portfolio`](https://hub.docker.com/r/sundararaghav0306/portfolio) |
+
+---
 
 ## 🎨 Customization
 
-### Edit Portfolio Content
+| What to edit | File |
+|---|---|
+| Page content & sections | `index.html` |
+| Animations & interactions | `main.js` |
+| Global styles & themes | `style.css` |
+| Tailwind tokens | `tailwind.config.js` |
+| Nginx server config | `nginx.conf` |
+| Resume PDF | `public/resume_.pdf` |
 
-1. Open `index.html` to modify page structure
-2. Update `src/style.css` for styling
-3. Modify `src/main.js` for interactivity
-4. Update `public/images/` with your assets
+---
 
-### Tailwind CSS Configuration
+## 📦 npm Scripts
 
-Edit `tailwind.config.js` to customize:
-- Colors
-- Typography
-- Spacing
-- Breakpoints
-- Custom utilities
+```bash
+npm run dev       # Start Vite dev server (localhost:5173)
+npm run build     # Build production bundle → dist/
+npm run preview   # Preview production build locally
+```
 
-### PostCSS Configuration
-
-Modify `postcss.config.js` for CSS processing preferences.
-
-## 🔐 Security Notes
-
-⚠️ **Important Security Tips:**
-
-- Never commit `.env` files with credentials
-- Rotate AWS access keys regularly
-- Use IAM roles instead of root credentials
-- Keep dependencies updated: `npm update`
-- Review Terraform state files (contains sensitive data)
-- Use GitHub secrets for CI/CD credentials
-
-## 📊 Performance Optimization
-
-- ✅ Minified CSS and JavaScript
-- ✅ Optimized images
-- ✅ Fast S3 hosting with CloudFront
-- ✅ Lazy loading components
-- ✅ SEO-friendly structure
+---
 
 ## 🐛 Troubleshooting
 
-### Issue: Deploy script fails
-- Check AWS CLI configuration: `aws configure`
-- Verify AWS credentials have proper permissions
-- Ensure S3 bucket exists and is accessible
+| Issue | Fix |
+|---|---|
+| Port 8080 already in use | Use `-p 9090:80` instead |
+| Container name conflict | Run `docker rm portfolio` first |
+| Docker push fails (network drop) | Re-run `docker push` — layers are cached |
+| Resume not downloading | Ensure `public/resume_.pdf` exists and rebuild |
 
-### Issue: Terraform apply fails
-- Run `terraform validate` to check syntax
-- Check `terraform.tfvars` for correct values
-- Verify AWS credentials are set
-
-### Issue: Site not loading after S3 deploy
-- Check S3 bucket policies allow public access
-- Verify index.html is in the bucket
-- Clear browser cache
-
-See [Deployment Guide](README-DEPLOYMENT.md) for more troubleshooting.
-
-## 📈 Next Steps
-
-1. ✅ Customize portfolio content
-2. ✅ Update images and branding
-3. ✅ Configure AWS account
-4. ✅ Deploy to production
-5. ✅ Set up custom domain (optional)
-6. ✅ Monitor and maintain
-
-## 🤝 Contributing
-
-This is a personal portfolio project, but feel free to fork and adapt for your own use!
-
-## 📄 License
-
-This project is open source. See LICENSE file for details.
+---
 
 ## 📞 Contact & Links
 
 - 🔗 **GitHub:** [@sundara-raghav](https://github.com/sundara-raghav)
-- 💼 **Portfolio:** Check your deployed site!
-- 📧 **Email:** Update with your contact info
-
-## 🎓 Learning Resources
-
-- [AWS Documentation](https://docs.aws.amazon.com/)
-- [Terraform Documentation](https://www.terraform.io/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [MDN Web Docs](https://developer.mozilla.org/)
-
-## ✨ Credits
-
-Built with modern web technologies and deployed with cloud infrastructure best practices.
+- 🐳 **Docker Hub:** [sundararaghav0306/portfolio](https://hub.docker.com/r/sundararaghav0306/portfolio)
 
 ---
 
-**Last Updated:** January 2026
-
-**Status:** ✅ Production Ready
-
-**Hosted On:** AWS (S3 + CloudFront / EC2)
-
-**Repository:** https://github.com/sundara-raghav/Sundara-Raghav-Web
-
----
-
-### 🚀 Ready to Deploy?
-
-Start with the [Deployment Guide](README-DEPLOYMENT.md) or run one of the deployment scripts to get your portfolio live!
-
-```bash
-# Deploy to S3 (recommended for quick start)
-./deploy-to-s3.sh
-
-# Or deploy to EC2 for more control
-./deploy-to-ec2.sh
-```
-
-Happy coding! 💻✨
+**Last Updated:** March 2026 &nbsp;|&nbsp; **Status:** ✅ Production Ready &nbsp;|&nbsp; **Build:** Vite + Docker + Nginx
