@@ -147,6 +147,37 @@ npm run preview   # Preview production build locally
 
 ---
 
+## 🔁 CI/CD to Netlify (GitHub Actions)
+
+This repository includes an auto-deploy workflow at `.github/workflows/netlify-deploy.yml`.
+
+### What it does
+
+- Runs on every push to `main`
+- Installs dependencies with `npm ci`
+- Builds the app with `npm run build`
+- Deploys `dist/` to Netlify production
+
+### One-time setup
+
+1. In GitHub, open your repo → **Settings** → **Secrets and variables** → **Actions**.
+2. Add these repository secrets:
+	 - `NETLIFY_AUTH_TOKEN`
+	 - `NETLIFY_SITE_ID`
+
+### How to get values
+
+- `NETLIFY_AUTH_TOKEN`:
+	- Netlify → User settings → Applications → Personal access tokens → create token
+- `NETLIFY_SITE_ID`:
+	- Netlify → Your site → Site configuration → General → Site details → Site ID
+
+After adding secrets, pushing to `main` will automatically build and deploy to:
+
+- https://sundara-raghav.netlify.app/
+
+---
+
 ## 🐛 Troubleshooting
 
 | Issue | Fix |
