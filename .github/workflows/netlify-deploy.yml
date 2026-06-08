@@ -30,7 +30,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to Netlify
-        run: npx netlify-cli deploy --dir=dist --prod --message "$DEPLOY_MESSAGE"
+        run: npx netlify-cli deploy --dir=dist --prod --message "$DEPLOY_MESSAGE" --site "$NETLIFY_SITE_ID" --auth "$NETLIFY_AUTH_TOKEN"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
