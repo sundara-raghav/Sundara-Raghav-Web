@@ -40,11 +40,11 @@ A modern, responsive personal portfolio website built with **Vite**, **GSAP anim
 ```
 Sundara-Raghav-Web/
 ├── public/
-│   └── resume_.pdf            # Resume PDF
+│   └── resume (3).pdf         # Resume PDF
 ├── src/                       # Source assets
 ├── dist/                      # Production build output (auto-generated)
 │   ├── index.html
-│   ├── resume_.pdf
+│   ├── resume (3).pdf
 │   └── assets/
 │       ├── index-*.css
 │       └── index-*.js
@@ -133,7 +133,7 @@ docker stop portfolio && docker rm portfolio
 | Global styles & themes | `style.css` |
 | Tailwind tokens | `tailwind.config.js` |
 | Nginx server config | `nginx.conf` |
-| Resume PDF | `public/resume_.pdf` |
+| Resume PDF | `public/resume (3).pdf` |
 
 ---
 
@@ -185,7 +185,7 @@ After adding secrets, pushing to `main` will automatically build and deploy to:
 | Port 8080 already in use | Use `-p 9090:80` instead |
 | Container name conflict | Run `docker rm portfolio` first |
 | Docker push fails (network drop) | Re-run `docker push` — layers are cached |
-| Resume not downloading | Ensure `public/resume_.pdf` exists and rebuild |
+| Resume not downloading | Ensure `public/resume (3).pdf` exists and rebuild |
 
 ---
 
