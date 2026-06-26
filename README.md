@@ -40,11 +40,11 @@ A modern, responsive personal portfolio website built with **Vite**, **GSAP anim
 ```
 Sundara-Raghav-Web/
 ├── public/
-│   └── resume (3).pdf         # Resume PDF
+│   └── Sundara-Raghav-G_Resume.pdf  # Resume PDF
 ├── src/                       # Source assets
 ├── dist/                      # Production build output (auto-generated)
 │   ├── index.html
-│   ├── resume (3).pdf
+│   ├── Sundara-Raghav-G_Resume.pdf
 │   └── assets/
 │       ├── index-*.css
 │       └── index-*.js
@@ -133,7 +133,7 @@ docker stop portfolio && docker rm portfolio
 | Global styles & themes | `style.css` |
 | Tailwind tokens | `tailwind.config.js` |
 | Nginx server config | `nginx.conf` |
-| Resume PDF | `public/resume (3).pdf` |
+| Resume PDF | `public/Sundara-Raghav-G_Resume.pdf` |
 
 ---
 
@@ -147,34 +147,34 @@ npm run preview   # Preview production build locally
 
 ---
 
-## 🔁 CI/CD to Netlify (GitHub Actions)
+## 🔁 CI/CD to Docker Hub (GitHub Actions)
 
-This repository includes an auto-deploy workflow at `.github/workflows/netlify-deploy.yml`.
+This repository includes an auto-publish workflow at `.github/workflows/dockerhub-publish.yml`.
 
 ### What it does
 
 - Runs on every push to `main`
-- Installs dependencies with `npm ci`
-- Builds the app with `npm run build`
-- Deploys `dist/` to Netlify production
+- Builds the Docker image from `Dockerfile`
+- Logs in to Docker Hub with GitHub Secrets
+- Pushes `latest` and commit-specific tags to Docker Hub
 
 ### One-time setup
 
 1. In GitHub, open your repo → **Settings** → **Secrets and variables** → **Actions**.
 2. Add these repository secrets:
-	 - `NETLIFY_AUTH_TOKEN`
-	 - `NETLIFY_SITE_ID`
+	 - `DOCKERHUB_USERNAME`
+	 - `DOCKERHUB_TOKEN`
 
 ### How to get values
 
-- `NETLIFY_AUTH_TOKEN`:
-	- Netlify → User settings → Applications → Personal access tokens → create token
-- `NETLIFY_SITE_ID`:
-	- Netlify → Your site → Site configuration → General → Site details → Site ID
+- `DOCKERHUB_USERNAME`:
+	- Your Docker Hub username
+- `DOCKERHUB_TOKEN`:
+	- Docker Hub → Account settings → Security → New Access Token
 
-After adding secrets, pushing to `main` will automatically build and deploy to:
+After adding secrets, pushing to `main` will automatically build and publish to:
 
-- https://sundara-raghav.netlify.app/
+- https://hub.docker.com/r/sundararaghav0306/portfolio
 
 ---
 
@@ -185,7 +185,7 @@ After adding secrets, pushing to `main` will automatically build and deploy to:
 | Port 8080 already in use | Use `-p 9090:80` instead |
 | Container name conflict | Run `docker rm portfolio` first |
 | Docker push fails (network drop) | Re-run `docker push` — layers are cached |
-| Resume not downloading | Ensure `public/resume (3).pdf` exists and rebuild |
+| Resume not downloading | Ensure `public/Sundara-Raghav-G_Resume.pdf` exists and rebuild |
 
 ---
 
